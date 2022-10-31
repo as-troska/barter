@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script>
+        let games = [];
+
+        fetch("/getGames")
+            .then((res) => res.json())
+            .then((res) => {
+                for (let x of res) {
+                    games.push(x)
+                }
+            })
+    </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Samlinga</title>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li>Home</li>
+            <li>Add keys</li>
+            <li>Bundles</li>
+        </ul>
+    </nav>
+    <main>
+                
+
+    </main>
+
+    <aside>
+        
+    </aside>
+</body>
+</html>

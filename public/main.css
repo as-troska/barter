@@ -1,0 +1,24 @@
+nav {
+    width: 100%;
+    background-color: #1b1c1c;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+ul {
+    margin: 0;
+    color: #165e44;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row; 
+}
+
+li {
+    flex-grow: 1;
+    text-align: center;
+    padding: 10px;
+}
