@@ -12,6 +12,17 @@
                     games.push(x)
                 }
             })
+
+
+        function drawGame(slug) {
+            fetch("/gameRawg?slug=" + slug)
+            .then((res) => res.json())
+            .then((res) => {
+                let element = document.createElement("p");
+                element.innerHTML = res.description;
+                document.body.appendChild(element);
+            })
+        }
     </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
