@@ -22,12 +22,6 @@
         </form>
     </main>
 
-
-
-
-
-
-
     <script>
         let search = document.getElementById("inpSearch");
         let btnSearch = document.getElementById("btnSearch");
@@ -63,7 +57,6 @@
         }
 
         function chooseGame(evt) {
-
             let game = evt.target;
             let gameSlug = game.dataset.slug;
             let gameName = game.innerText;
@@ -107,9 +100,7 @@
             submit.value = "Submit";
             submit.id = "btnSubmit"
             form.appendChild(submit)            
-        }
-
-        
+        } 
 
     </script>
 

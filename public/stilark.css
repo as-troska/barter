@@ -46,6 +46,7 @@ ul {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 li {    
     margin: 3px;
     padding: 10px;

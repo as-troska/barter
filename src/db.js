@@ -5,12 +5,6 @@ const client = new MongoClient(mongouri);
 const database = "barter";
 const collection = "games";
 
-
-async function refreshKeys(req, res) {
-
-
-}
-
 /**
  * Gets all games from database and returns as object
  * @param {String} database Database to fetch from
@@ -40,7 +34,6 @@ async function getDb(database, collection) {
  * @param {String} slug Slug from gameDB (evt forandre til SteamID)
  * @param {[String]} keys Array of keys. Note to use array, even if only one key exists.
  */
-
 async function addGame(database, collection, name, slug, keys) {
     let doc = {
         name: name,
@@ -81,7 +74,6 @@ async function addGame(database, collection, name, slug, keys) {
 
 }
 
-
 async function checkConnection() {
     try {
         await client.connect();
@@ -95,12 +87,6 @@ async function checkConnection() {
         await client.close();
     }
 }
-
-//addGame(database, collection, "Monkey Island", "monkey-island", ["key1", "key2"])
-//addGame(database, collection, "Monkey Island 2", "monkey-island2", ["key1", "key2"])
-//addGame(database, collection, "Doom II", "doom-ii", "sldfn2.-234-23")
-//getDb("barter", "games");
-
 
 exports.refreshKeys = refreshKeys;
 exports.checkConnection = checkConnection;
