@@ -53,8 +53,8 @@
             fetch(url)
             .then(response => response.json())
             .then(response => {
-                for(let x of response) {
-                    imgLoading.style.visibility = "hidden";
+                imgLoading.style.visibility = "hidden";
+                for(let x of response) {                    
                     let element = document.createElement("li");
                     element.innerText = x.name;
                     element.className = "game";
