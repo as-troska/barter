@@ -88,7 +88,6 @@ async function checkConnection() {
     }
 }
 
-exports.refreshKeys = refreshKeys;
 exports.checkConnection = checkConnection;
 exports.getDb = getDb;
 exports.addGame = addGame;
