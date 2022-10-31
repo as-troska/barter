@@ -34,3 +34,9 @@ app.get("/searchRawg", async (req, res) => {
     res.send(results)
 })
 
+app.get("/gameRawg", async (req, res) => {
+    let slug = req.query.slug;
+    let result = await rawg.getGame(slug)
+    res.send(result)
+})
+
