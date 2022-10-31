@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./stilark.css" type="text/css">
+    <link rel="stylesheet" href="./insert.css" type="text/css">
     <title>Add keys</title>    
 </head>
 <body>
@@ -12,9 +12,11 @@
     <main>
         <input type="text" id="inpSearch">
         <button id="btnSearch">Search</button>
-
+        <br>
+        <img id="imgLoading">
+        <br>
         <ul id="results">
-
+            
         </ul>
 
         <form method="post" action="/submit" id="gameForm">
@@ -26,6 +28,11 @@
         let search = document.getElementById("inpSearch");
         let btnSearch = document.getElementById("btnSearch");
         let results = document.getElementById("results");
+        let imgLoading = document.getElementById("imgLoading");
+
+        imgLoading.style.visibility = "hidden";
+        imgLoading.src = "/img/loading.gif";
+        imgLoading.style.width = "40px";
 
         btnSearch.style.visibility = "hidden";
         btnSearch.addEventListener("click", searching)
@@ -36,6 +43,7 @@
         })
 
         function searching() {
+            imgLoading.style.visibility = "visible";
             results.innerHTML = "";
             let searchTerm = search.value;
             let list = document.getElementById("list");        
@@ -46,6 +54,7 @@
             .then(response => response.json())
             .then(response => {
                 for(let x of response) {
+                    imgLoading.style.visibility = "hidden";
                     let element = document.createElement("li");
                     element.innerText = x.name;
                     element.className = "game";
