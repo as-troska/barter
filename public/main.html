@@ -2,28 +2,7 @@
 <html lang="en">
 
 <head>
-    <script>
-        let games = [];
-
-        fetch("/getGames")
-            .then((res) => res.json())
-            .then((res) => {
-                for (let x of res) {
-                    games.push(x)
-                }
-            })
-
-
-        function drawGame(slug) {
-            fetch("/gameRawg?slug=" + slug)
-            .then((res) => res.json())
-            .then((res) => {
-                let element = document.createElement("p");
-                element.innerHTML = res.description;
-                document.body.appendChild(element);
-            })
-        }
-    </script>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,18 +13,82 @@
 <body>
     <nav>
         <ul>
-            <li>Home</li>
-            <li>Add keys</li>
-            <li>Bundles</li>
+            <li>HOME</li>
+            <li>ADD KEYS</li>
+            <li>BUNDLES</li>
         </ul>
     </nav>
     <main>
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>NAME</td>
+                        <td>KEY</td>
+                    </tr>
+                </thead>
+
+                <tbody id="gameTable">
+
+                </tbody>
+            </table>
+        </section>
+        <aside>
+        
+        </aside>
                 
 
     </main>
+    <script>
+        let games = [];
+        let gameTable = document.getElementById("gameTable");
 
-    <aside>
-        
-    </aside>
+        fetch("/getGames")
+            .then((res) => res.json())
+            .then((res) => {
+                for (let x of res) {
+                    games.push(x)
+                    console.log(x)
+                    let row = document.createElement("tr")
+                    let cellCheck = document.createElement("td")
+                    let cellName = document.createElement("td")
+                    let cellKey = document.createElement("td")
+                    let checkBox = document.createElement("input")
+                    
+                    checkBox.type = "checkbox";
+                    checkBox.name = "x.slug";
+
+                    cellCheck.appendChild(checkBox);
+                    row.appendChild(cellCheck)
+
+                    cellName.innerHTML = x.name;
+                    cellName.dataset.slug = x.slug;
+                    cellName.addEventListener("click", drawGame)
+                    row.appendChild(cellName)
+
+                    cellKey.innerHTML = x.keys[0];
+                    row.appendChild(cellKey);
+
+                    gameTable.appendChild(row)                 
+                    
+                    
+                    
+                }
+            })
+
+
+        function drawGame(evt) {
+            slug = evt.target.dataset.slug
+            fetch("/gameRawg?slug=" + slug)
+            .then((res) => res.json())
+            .then((res) => {
+                let element = document.createElement("p");
+                element.innerHTML = res.description;
+                document.body.appendChild(element);
+            })
+        }
+    </script>
+
 </body>
 </html>
