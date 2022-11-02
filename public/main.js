@@ -39,8 +39,13 @@ function drawGame(evt) {
     fetch("/gameRawg?slug=" + slug)
     .then((res) => res.json())
     .then((res) => {
-        let element = document.createElement("p");
-        element.innerHTML = res.description;
-        document.body.appendChild(element);
+        console.log(res)
+        let target = document.getElementsByTagName("article")[0]
+        let heading = document.createElement("h1");
+        heading.innerHTML = res.name;
+        target.appendChild(heading);
+        let paragraph = document.createElement("p");
+        paragraph.innerHTML = res.description;
+        target.appendChild(paragraph);
     })
 }
