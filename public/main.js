@@ -40,12 +40,50 @@ function drawGame(evt) {
     .then((res) => res.json())
     .then((res) => {
         console.log(res)
+        
         let target = document.getElementsByTagName("article")[0]
+        target.innerHTML = "";
+        
         let heading = document.createElement("h1");
         heading.innerHTML = res.name;
         target.appendChild(heading);
+
+        let infoPar = document.createElement("p");
+        let released = document.createElement("span");
+        let br = document.createElement("br");
+        released.innerHTML = "Released: " + res.released;
+        infoPar.appendChild(released);
+        infoPar.appendChild(br);
+        let metacritic = document.createElement("span");
+        metacritic.innerHTML = "Metacritic score: " + String(res.metacritic);
+        infoPar.appendChild(metacritic)
+        target.appendChild(infoPar)
+        
         let paragraph = document.createElement("p");
         paragraph.innerHTML = res.description;
         target.appendChild(paragraph);
+
+        let imgContainer = document.querySelector("figure");
+        imgContainer.innerHTML = "";
+        if(res.screenshots[0] != null) {
+            for (let x of res.screenshots) {
+                let image = document.createElement("img");
+                image.src = x;
+                image.className = "thumbnail"
+                image.dataset.size = "small";
+                image.addEventListener("click", fullSizeToggle)
+                imgContainer.appendChild(image)
+            }
+        }
     })
+}
+
+
+function fullSizeToggle(evt) {
+    let image = evt.target
+    if(image.dataset.size === "small") {
+        image.className = "fullSizeOverlay"
+        image.dataset.size = "full";
+        console.log(evt.target)
+    }
 }
