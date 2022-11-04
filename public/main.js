@@ -1,5 +1,8 @@
 let games = [];
+let tradeButton = document.querySelector("#btnTrade");
 let gameTable = document.getElementById("gameTable");
+
+tradeButton.addEventListener("click", createTrade)
 
 fetch("/getGames")
     .then((res) => res.json())
@@ -14,7 +17,7 @@ fetch("/getGames")
             let checkBox = document.createElement("input")
             
             checkBox.type = "checkbox";
-            checkBox.name = "x.slug";
+            checkBox.name = x.slug;
 
             cellCheck.appendChild(checkBox);
             row.appendChild(cellCheck)
@@ -41,7 +44,7 @@ function drawGame(evt) {
     .then((res) => {
         console.log(res)
         
-        let target = document.getElementsByTagName("article")[0]
+        let target = document.getElementsByTagName("article")[1]
         target.innerHTML = "";
         
         let heading = document.createElement("h1");
@@ -51,11 +54,11 @@ function drawGame(evt) {
         let infoPar = document.createElement("p");
         let released = document.createElement("span");
         let br = document.createElement("br");
-        released.innerHTML = "Released: " + res.released;
+        released.innerHTML = "<b>Released:</b> " + res.released;
         infoPar.appendChild(released);
         infoPar.appendChild(br);
         let metacritic = document.createElement("span");
-        metacritic.innerHTML = "Metacritic score: " + String(res.metacritic);
+        metacritic.innerHTML = "<b>Metacritic score:</b> " + String(res.metacritic);
         infoPar.appendChild(metacritic)
         target.appendChild(infoPar)
         
@@ -85,5 +88,31 @@ function fullSizeToggle(evt) {
         image.className = "fullSizeOverlay"
         image.dataset.size = "full";
         console.log(evt.target)
+    } else {
+        image.className = "thumbnail";
+        image.dataset.size = "small";
     }
+}
+
+function createTrade() {
+    let checkboxes = document.querySelectorAll("input[type=checkbox]")
+    let trades = [];
+    let output = document.querySelector("details")
+    let tradeText = document.createElement("p");
+    tradeText.innerHTML = "This is an automated message: Here are my keys. If you haven't yet sent yours, just drop them here when you have the time. Please let me know if you have any issues, and we will work something out. I will close the trade and add +rep once your keys pass. Thanks for trading!"
+    output.appendChild(tradeText);
+    let tradeList = document.createElement("ul");
+        
+    for (let box of checkboxes) {
+        if(box.checked) {
+            for (let lookup of games) {
+                if(box.name === lookup.slug) {
+                    let tradeGame = document.createElement("li")
+                    tradeGame.innerHTML = lookup.name + ": " + lookup.keys[0]
+                    tradeList.appendChild(tradeGame)
+                }
+            }
+        }
+    }
+    output.appendChild(tradeList);
 }
