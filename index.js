@@ -22,9 +22,16 @@ app.post("/submit", async (req, res) => {
     console.log(req.body)
     let name = req.body.name;
     let slug = req.body.slug;
-    let key = [req.body.key];
+    let key = req.body.key;
 
     db.addGame("barter", "games", name, slug, key)
+    res.redirect('back');
+})
+
+app.post("/addTrade", async (req, res) => {
+    console.log(req.body)
+
+    db.addTrade(req.body.names, req.body.slugs, req.body.keys, req.body.ids)
     res.redirect('back');
 })
 
