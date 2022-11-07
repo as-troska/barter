@@ -26,7 +26,7 @@ async function getDb(database, collection) {
         console.log(error);
     } finally {
         await client.close();
-        console.log(allGames)
+        
         return allGames;
     }
 }

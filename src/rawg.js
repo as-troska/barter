@@ -40,7 +40,6 @@ async function getGame(slug) {
         let screenUrl = "https://api.rawg.io/api/games/" + slug + "/screenshots?key=" + rawgkey;
         try {
             const response = await axios.get(screenUrl)
-            console.log(response.data.results)
             for (let x of response.data.results) {
                 gameInfo.screenshots.push(x.image)
             }
