@@ -24,7 +24,7 @@ app.post("/submit", async (req, res) => {
     let slug = req.body.slug;
     let key = req.body.key;
 
-    db.addGame("barter", "games", name, slug, key)
+    await db.addGame("barter", "games", name, slug, key)
     res.redirect('back');
 })
 
