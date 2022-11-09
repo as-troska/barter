@@ -1,10 +1,13 @@
 let games = [];
 let tradeButton = document.querySelector("#btnTrade");
+let bundleButton = document.querySelector("#btnBundle");
 let gameTable = document.getElementById("gameTable");
-let navHome = document.getElementById("navHome").addEventListener("click", drawMain)
-let navAdd = document.getElementById("navAdd").addEventListener("click", drawInsert)
-tradeButton.addEventListener("click", createTrade)
+let navHome = document.getElementById("navHome").addEventListener("click", drawMain);
+let navAdd = document.getElementById("navAdd").addEventListener("click", drawInsert);
+tradeButton.addEventListener("click", createTrade);
+bundleButton.addEventListener("click", createBundle);
 drawMain();
+
 
 //*******************************************
 // FUNCTIONS RELATED TO THE MAIN VIEW
@@ -38,7 +41,7 @@ function drawMain() {
 
             gameTable.innerHTML = "";
             for (let x of res) {
-                games.push(x)                
+                games.push(x)
                 let row = document.createElement("tr")
                 let cellCheck = document.createElement("td")
                 let cellName = document.createElement("td")
@@ -88,7 +91,7 @@ function drawGame(evt) {
     document.querySelector("figure").appendChild(figimgLoading)
 
     slug = evt.target.dataset.slug
-    
+
     fetch("/gameRawg?slug=" + slug)
         .then((res) => res.json())
         .then((res) => {
@@ -136,7 +139,7 @@ function fullSizeToggle(evt) {
     let image = evt.target
     if (image.dataset.size === "small") {
         image.className = "fullSizeOverlay"
-        image.dataset.size = "full";        
+        image.dataset.size = "full";
     } else {
         image.className = "thumbnail";
         image.dataset.size = "small";
@@ -175,7 +178,7 @@ function createTrade() {
                 }
             }
         }
-    }    
+    }
     output.appendChild(tradeList);
 
     let buttonFinish = document.createElement("button");
@@ -188,12 +191,93 @@ function createTrade() {
             body: JSON.stringify(tradeObject)
         }).then(res => {
             console.log("Request complete! response:", res);
+        }).then(res => {
+            location.reload();
         });
     })
     buttonFinish.innerHTML = "Finish trade";
     output.appendChild(buttonFinish)
     output.open = true;
 }
+
+function createBundle() {
+    let checkboxes = document.querySelectorAll("input[type=checkbox]");
+    let container = document.querySelector("details");
+    let output = document.createElement("form");
+    output.method = "POST";
+    output.action = "/addBundle"
+    let bundleText = document.createElement("p");
+    bundleText.innerHTML = "The following games will be added to your custom bundle. Please fill inn recepient of bundle, as well as a short message to be displayed"
+    output.appendChild(bundleText);
+    let tradeList = document.createElement("ul");
+
+    let tradeObject = {
+        recepient: "",
+        message: "",
+        names: [],
+        slugs: [],
+        keys: [],
+        ids: []
+    }
+
+    for (let box of checkboxes) {
+        if (box.checked) {
+            for (let lookup of games) {
+                if (box.name === lookup._id) {
+                    let tradeGame = document.createElement("li")
+                    tradeGame.innerHTML = lookup.name + ": " + lookup.key;
+                    tradeList.appendChild(tradeGame);
+                    tradeObject.names.push(lookup.name);
+                    tradeObject.slugs.push(lookup.slug);
+                    tradeObject.keys.push(lookup.key);
+                    tradeObject.ids.push(lookup._id)
+                    let formName = document.createElement("input");
+                    formName.value = lookup.name
+                    formName.type = "hidden";
+                    formName.name = "names[]";
+                    output.appendChild(formName);
+                    let formSlug = document.createElement("input");
+                    formSlug.value = lookup.slug
+                    formSlug.type = "hidden";
+                    formSlug.name = "slugs[]";
+                    output.appendChild(formSlug);
+                    let formKey = document.createElement("input");
+                    formKey.value = lookup.key
+                    formKey.type = "hidden";
+                    formKey.name = "keys[]";
+                    output.appendChild(formKey);
+                    let formIds = document.createElement("input");
+                    formIds.value = lookup._id
+                    formIds.type = "hidden";
+                    formIds.name = "oldIds[]";
+                    output.appendChild(formIds);
+                }
+            }
+        }
+    }
+    container.appendChild(tradeList);
+
+    let inpRecepient = document.createElement("input");
+    inpRecepient.type = "text";
+    inpRecepient.name = "recepient"
+    output.appendChild(inpRecepient)
+
+    let inpMessage = document.createElement("input");
+    inpMessage.type = "textarea";
+    inpMessage.name = "message"
+    output.appendChild(inpMessage);
+
+
+    let buttonFinish = document.createElement("input");
+    buttonFinish.type = "Submit";
+    buttonFinish.value = "Create bundle"
+    output.appendChild(buttonFinish)
+
+    container.appendChild(output);
+
+    container.open = true;
+}
+
 
 
 //***************************************************
@@ -288,7 +372,7 @@ function searching() {
 function gameResults(evt) {
     let game = evt.target;
     let gameSlug = game.dataset.slug;
-    let gameName = game.innerText;    
+    let gameName = game.innerText;
 
     let form = document.getElementById("gameForm");
     form.innerHTML = "";

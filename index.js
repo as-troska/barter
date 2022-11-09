@@ -23,13 +23,11 @@ app.post("/submit", async (req, res) => {
     let slug = req.body.slug;
     let key = req.body.key;
 
-    await db.addGame("barter", "games", name, slug, key)
-    res.redirect('back');
+    await db.addGame("barter", "games", name, slug, key)   
 })
 
 app.post("/addTrade", async (req, res) => {
-    db.addTrade(req.body.names, req.body.slugs, req.body.keys, req.body.ids)
-    res.redirect('back');
+    await db.addTrade(req.body.names, req.body.slugs, req.body.keys, req.body.ids)    
 })
 
 app.get("/searchRawg", async (req, res) => {
@@ -44,3 +42,17 @@ app.get("/gameRawg", async (req, res) => {
     res.send(result)
 })
 
+app.get("/viewBundle", async (req, res) => {
+
+})
+
+app.get("/getBundles", async (req, res) => {
+
+})
+
+app.post("/addBundle", async (req, res) => {
+    console.log(req.body)
+
+    await db.addBundle(req.body.recepient, req.body.message, req.body.names, req.body.slugs, req.body.keys, req.body.oldIds)
+    res.redirect("back");
+})

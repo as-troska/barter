@@ -26,7 +26,7 @@ async function getDb(database, collection) {
         console.log(error);
     } finally {
         await client.close();
-        
+
         return allGames;
     }
 }
@@ -91,6 +91,46 @@ async function addTrade(names, slugs, keys, ids) {
         await client.close();
     }
 }
+/**
+ * Creates a new trade with all selected games, then removes those games from game collection
+ * @param {String} recepient String of bundle-recepient
+ * @param {String} message Optional message to recepient of bundle
+ * @param {Array} names Array of all game names 
+ * @param {Array} slugs Array of all game slugs
+ * @param {Array} keys Array of all game keys
+ * @param {Array} ids Array of all game IDs. These are used for deleting from game collection
+ */
+async function addBundle(recepient, message, names, slugs, keys, ids) {
+    let doc = {
+        recepient: recepient,
+        message: message,
+        name: names,
+        slug: slugs,
+        keys: keys,
+        oldIds: ids
+    }
+
+    console.log(doc);
+    
+    try {
+        await client.connect();
+        const add = await client.db("barter").collection("bundle").insertOne(doc);
+        console.log("Data added");
+        console.table(doc);
+        console.log("Data has id: " + add.insertedId);
+        for (let x of doc.oldIds) {
+            let deldoc = {
+                _id: new mongoObjectId(String(x))
+            }
+            const remove = await client.db("barter").collection("games").deleteOne(deldoc)
+            console.log("Game removed")
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+    }
+}
 
 async function checkConnection() {
     try {
@@ -110,3 +150,4 @@ exports.checkConnection = checkConnection;
 exports.getDb = getDb;
 exports.addGame = addGame;
 exports.addTrade = addTrade;
+exports.addBundle = addBundle;
