@@ -17,10 +17,30 @@ const collection = "games";
  * @param {String} collection Collection to fetch from
  * @returns {[Object]} Returns array with objects of all games
  */
-async function getDb(database, collection) {
+async function getDb() {
     try {
         await client.connect()
         const cursor = await client.db("barter").collection("games").find({});
+        var allGames = await cursor.toArray()
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+
+        return allGames;
+    }
+}
+
+/**
+ * Gets all bundles from database and returns as object
+ * @param {String} database Database to fetch from
+ * @param {String} collection Collection to fetch from
+ * @returns {[Object]} Returns array with objects of all games
+ */
+ async function getBundles() {
+    try {
+        await client.connect()
+        const cursor = await client.db("barter").collection("bundle").find({});
         var allGames = await cursor.toArray()
     } catch (error) {
         console.log(error);
@@ -93,6 +113,7 @@ async function addTrade(names, slugs, keys, ids) {
 }
 /**
  * Creates a new trade with all selected games, then removes those games from game collection
+ * @param {String} title Title of the bundle
  * @param {String} recepient String of bundle-recepient
  * @param {String} message Optional message to recepient of bundle
  * @param {Array} names Array of all game names 
@@ -100,8 +121,9 @@ async function addTrade(names, slugs, keys, ids) {
  * @param {Array} keys Array of all game keys
  * @param {Array} ids Array of all game IDs. These are used for deleting from game collection
  */
-async function addBundle(recepient, message, names, slugs, keys, ids) {
+async function addBundle(title, recepient, message, names, slugs, keys, ids) {
     let doc = {
+        title: title,
         recepient: recepient,
         message: message,
         name: names,
@@ -148,6 +170,7 @@ async function checkConnection() {
 
 exports.checkConnection = checkConnection;
 exports.getDb = getDb;
+exports.getBundles = getBundles;
 exports.addGame = addGame;
 exports.addTrade = addTrade;
 exports.addBundle = addBundle;

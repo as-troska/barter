@@ -4,6 +4,7 @@ let bundleButton = document.querySelector("#btnBundle");
 let gameTable = document.getElementById("gameTable");
 let navHome = document.getElementById("navHome").addEventListener("click", drawMain);
 let navAdd = document.getElementById("navAdd").addEventListener("click", drawInsert);
+let navBundles = document.getElementById("navBundles").addEventListener("click", drawBundles);
 tradeButton.addEventListener("click", createTrade);
 bundleButton.addEventListener("click", createBundle);
 drawMain();
@@ -152,6 +153,7 @@ function fullSizeToggle(evt) {
 function createTrade() {
     let checkboxes = document.querySelectorAll("input[type=checkbox]")
     let output = document.querySelector("details")
+    output.innerHTML = "";
     let tradeText = document.createElement("p");
     tradeText.innerHTML = "This is an automated message: Here are my keys. If you haven't yet sent yours, just drop them here when you have the time. Please let me know if you have any issues, and we will work something out. I will close the trade and add +rep once your keys pass. Thanks for trading!"
     output.appendChild(tradeText);
@@ -199,14 +201,19 @@ function createTrade() {
     output.appendChild(buttonFinish)
     output.open = true;
 }
-
+/**
+ * Function for looping through the checkboxes and adding the checked keys to a hidden form. Two input fields are then generated, where the user may put the name of recepient, as well as a message.
+ */
 function createBundle() {
     let checkboxes = document.querySelectorAll("input[type=checkbox]");
     let container = document.querySelector("details");
+    container.innerHTML = ""
     let output = document.createElement("form");
+    output.innerHTML = "";
     output.method = "POST";
     output.action = "/addBundle"
     let bundleText = document.createElement("p");
+    bundleText.innerHTML = "";
     bundleText.innerHTML = "The following games will be added to your custom bundle. Please fill inn recepient of bundle, as well as a short message to be displayed"
     output.appendChild(bundleText);
     let tradeList = document.createElement("ul");
@@ -257,16 +264,34 @@ function createBundle() {
     }
     container.appendChild(tradeList);
 
+    let inpTitle = document.createElement("input");
+    inpTitle.type = "text";
+    inpTitle.name = "title";
+    inpTitle.required = "true";
+    inpTitle.value = "Title of bundle"
+    output.appendChild(inpTitle)
+
+    let break1 = document.createElement("br");
+    output.appendChild(break1);
+
     let inpRecepient = document.createElement("input");
     inpRecepient.type = "text";
-    inpRecepient.name = "recepient"
+    inpRecepient.name = "recepient";
+    inpRecepient.required = "true";
+    inpRecepient.value = "Recepient of bundle"
     output.appendChild(inpRecepient)
 
+    let break2 = document.createElement("br");
+    output.appendChild(break2);
+
     let inpMessage = document.createElement("input");
-    inpMessage.type = "textarea";
+    inpMessage.type = "text";
     inpMessage.name = "message"
+    inpMessage.value = "Message to the recepient (Optional)"
     output.appendChild(inpMessage);
 
+    let break3 = document.createElement("br");
+    output.appendChild(break3);
 
     let buttonFinish = document.createElement("input");
     buttonFinish.type = "Submit";
@@ -412,4 +437,50 @@ function gameResults(evt) {
     submit.value = "Submit";
     submit.id = "btnSubmit"
     form.appendChild(submit)
+}
+
+//***************************************************
+// FUNCTIONS FOR DRAWING THE BUNDLES VIEW
+//***************************************************
+
+function drawBundles() {
+    let container = document.querySelectorAll("article")[1];
+    container.innerHTML = "";
+    let figure = document.querySelector("figure");
+    figure.innerHTML = "";
+
+    fetch("/getBundles")
+    .then((res) => res.json())
+    .then((res) => {
+        res.reverse();
+        console.log(res);
+
+        for (let x of res) {
+            let bundle = document.createElement("fieldset");
+            let bundleName = document.createElement("legend");
+            bundleName.innerText = '"' + x.title + '" - A bundle for ' + x.recepient;
+            
+            let games = document.createElement("ul");
+            
+            for (let y of x.name) {
+                let game = document.createElement("li");
+                game.innerText = y;
+                games.appendChild(game);
+            
+            }
+
+            let link = document.createElement("a");
+            link.href = "/bundle?id=" + x._id;
+            link.target = "_blank";
+            link.innerText = "Link to bundle";
+
+            
+            bundle.appendChild(bundleName);
+            bundle.appendChild(games);            
+            bundle.appendChild(link);
+            container.appendChild(bundle);          
+
+        }
+    })
+
 }

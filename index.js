@@ -27,7 +27,8 @@ app.post("/submit", async (req, res) => {
 })
 
 app.post("/addTrade", async (req, res) => {
-    await db.addTrade(req.body.names, req.body.slugs, req.body.keys, req.body.ids)    
+    await db.addTrade(req.body.names, req.body.slugs, req.body.keys, req.body.ids);
+    res.redirect("back");
 })
 
 app.get("/searchRawg", async (req, res) => {
@@ -47,12 +48,13 @@ app.get("/viewBundle", async (req, res) => {
 })
 
 app.get("/getBundles", async (req, res) => {
-
+    let bundles = await db.getBundles()
+    res.send(bundles)
 })
 
 app.post("/addBundle", async (req, res) => {
     console.log(req.body)
 
-    await db.addBundle(req.body.recepient, req.body.message, req.body.names, req.body.slugs, req.body.keys, req.body.oldIds)
+    await db.addBundle(req.body.title, req.body.recepient, req.body.message, req.body.names, req.body.slugs, req.body.keys, req.body.oldIds)
     res.redirect("back");
 })

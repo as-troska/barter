@@ -45,7 +45,8 @@ section {
 aside {
     width: 60%;
     font-weight: 100;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 0px;
 }
 
 article {
