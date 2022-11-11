@@ -33,8 +33,6 @@ async function getDb() {
 
 /**
  * Gets all bundles from database and returns as object
- * @param {String} database Database to fetch from
- * @param {String} collection Collection to fetch from
  * @returns {[Object]} Returns array with objects of all games
  */
  async function getBundles() {
@@ -48,6 +46,24 @@ async function getDb() {
         await client.close();
 
         return allGames;
+    }
+}
+/**
+ * Get a single bundle and returns as object
+ * @param {String} id id of bundle
+ * @returns {Object} Returns the bundle
+ */
+ async function getBundle(id) {
+    try {
+        await client.connect()
+        var bundle = await client.db("barter").collection("bundle").findOne({id});
+        
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+
+        return bundle;
     }
 }
 

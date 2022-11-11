@@ -7,8 +7,11 @@ module.exports = {
     apikey: process.env.APIKEY, 
     steamid: process.env.STEAMID,
     mongouri: process.env.MONGOURI,
-    rawgkey: process.env.RAWGKEY
+    rawgkey: process.env.RAWGKEY,
+    cookieKey: process.env.COOKIEKEY,
+    adminPassword: process.env.ADMINPASSWORD
 }
 
 
-
+//COOKIEKEY=47069666
+//ADMINPASSWORD="laks"
