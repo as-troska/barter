@@ -1,6 +1,8 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+require('dotenv').config({path: '../.env'})
+
 module.exports = {
     port: process.env.PORT,
     apiurl: process.env.APIURL,
@@ -13,5 +15,4 @@ module.exports = {
 }
 
 
-//COOKIEKEY=47069666
-//ADMINPASSWORD="laks"
+

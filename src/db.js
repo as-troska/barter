@@ -3,7 +3,7 @@ const {
 } = require("mongodb");
 const {
     mongouri
-} = require("./config");
+} = require("../config");
 const client = new MongoClient(mongouri);
 
 const mongoObjectId = require("mongodb").ObjectId
