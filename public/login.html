@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Please login</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 99vh;
+            background-color: black;            
+            font-family: monospace;
+        }
+
+        input {
+            background-color: black;
+            color: #165e44;
+            border-top-style: hidden;
+            border-right-style: hidden;
+            border-left-style: hidden;
+            border-bottom-style: groove;
+            border-color: #165e44;
+            font-family: monospace;
+            font-size: 24px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        input[type="submit"] {
+            border-top-style: groove;
+            border-right-style: groove;
+            border-left-style: groove;
+            border-bottom-style: groove;
+        }
+    </style>
 </head>
+
 <body>
     <form action="/login" method="POST">
-        <input type="text" name="password" id="inpPassword">
+        <input type="password" name="password" id="inpPassword">
         <input type="submit" value="Login">
-    </form>    
+    </form>
 </body>
+
 </html>

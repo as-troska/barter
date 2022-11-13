@@ -68,7 +68,13 @@ app.get("/gameRawg", async (req, res) => {
 })
 
 app.get("/viewBundle", async (req, res) => {
-    
+    let id = req.query.id;
+    res.send(await db.getBundle(id))    
+})
+
+app.get("/bundle", async (req, res) => {
+    const id = req.query.id;    
+    res.redirect("bundle.html?id=" + id)    
 })
 
 app.get("/getBundles", securityCheck, async (req, res) => {

@@ -54,10 +54,14 @@ async function getDb() {
  * @returns {Object} Returns the bundle
  */
  async function getBundle(id) {
+    ids = new mongoObjectId(id)
+    let doc = {
+        _id: ids
+    }
     try {
+        console.log(doc)
         await client.connect()
-        var bundle = await client.db("barter").collection("bundle").findOne({id});
-        
+        var bundle = await client.db("barter").collection("bundle").findOne(doc);                        
     } catch (error) {
         console.log(error);
     } finally {
@@ -190,3 +194,4 @@ exports.getBundles = getBundles;
 exports.addGame = addGame;
 exports.addTrade = addTrade;
 exports.addBundle = addBundle;
+exports.getBundle = getBundle;
