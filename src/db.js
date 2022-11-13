@@ -58,8 +58,7 @@ async function getDb() {
     let doc = {
         _id: ids
     }
-    try {
-        console.log(doc)
+    try {        
         await client.connect()
         var bundle = await client.db("barter").collection("bundle").findOne(doc);                        
     } catch (error) {

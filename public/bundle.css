@@ -1,0 +1,139 @@
+nav {
+    width: 100%;
+    background-color: #1b1c1c;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bolder;
+    background-color: black;
+    color: #165e44;
+}
+
+nav>ul {
+    margin: 0;
+    color: #165e44;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+    justify-content: space-evenly;
+}
+
+nav>ul>li {
+    flex-grow: 1;
+    text-align: center;
+    padding: 10px;
+    min-width: 150px;
+}
+
+nav>ul>li:hover {
+    background-color: black;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: auto;
+}
+
+article {
+    overflow-x: auto;
+    max-width: 900px;
+    width: 100%;
+    height: 40vh;    
+}
+
+article > span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+}
+
+article > h1 {
+    text-align: center;
+}
+
+a {
+    text-decoration: dotted;
+    color: #165e44;
+}
+
+a:visited {
+    color: #334543;
+}
+button {
+    display: block;
+    margin: auto;
+    border-top-style: groove;
+    border-right-style: groove;
+    border-left-style: groove;
+    border-bottom-style: groove;
+    border-color: #165e44;
+    font-family: monospace;
+    font-size: 24px;
+    background-color: black;
+    color: #165e44;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #1b1c1c;
+}
+
+header {
+    max-width: 800px;
+    height: 9vh;
+    margin: auto;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    z-index: 100;
+    background-color: black;
+}
+
+figure {
+    display: block;
+    overflow-x: auto;
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+}
+
+figure > img {
+    padding: 5px;
+}
+
+.thumbnail {
+    height: 100px;
+    transition: 0.2s;
+
+}
+
+.fullSizeOverlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    transition: 0.2s;
+}
