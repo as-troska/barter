@@ -1,7 +1,7 @@
 {
   "name": "barter-generator",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.1.0",
+  "description": "A db for managing spare Steam keys, as well as generating bundles for your friends",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "helmet": "^6.0.0",
     "mongodb": "^4.11.0"
   }
 }

@@ -5,12 +5,14 @@ const rawg = require("./src/rawg")
 const {port} = require("./config.js");
 const {cookieKey} = require("./config.js");
 const {adminPassword} = require("./config.js");
-const session = require('express-session');
+const session = require("express-session");
+const helmet = require("helmet");
+
 
 
 const app = express();
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(session({
@@ -20,6 +22,7 @@ app.use(session({
         resave:true
     })
 ); 
+app.use(helmet());
 
 function securityCheck(req, res, next) {
     if(req.session.loggedIn) {
@@ -47,7 +50,8 @@ app.post("/submit", securityCheck, async (req, res) => {
     let slug = req.body.slug;
     let key = req.body.key;
 
-    await db.addGame("barter", "games", name, slug, key)   
+    await db.addGame("barter", "games", name, slug, key)
+    res.redirect("back");
 })
 
 app.post("/addTrade", securityCheck, async (req, res) => {

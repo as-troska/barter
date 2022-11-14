@@ -209,13 +209,14 @@ function createBundle() {
     let container = document.querySelector("details");
     container.innerHTML = ""
     let output = document.createElement("form");
+    output.className = "bundleForm";
     output.innerHTML = "";
     output.method = "POST";
     output.action = "/addBundle"
     let bundleText = document.createElement("p");
     bundleText.innerHTML = "";
     bundleText.innerHTML = "The following games will be added to your custom bundle. Please fill inn recepient of bundle, as well as a short message to be displayed"
-    output.appendChild(bundleText);
+    container.appendChild(bundleText);
     let tradeList = document.createElement("ul");
 
     let tradeObject = {
@@ -271,9 +272,6 @@ function createBundle() {
     inpTitle.value = "Title of bundle"
     output.appendChild(inpTitle)
 
-    let break1 = document.createElement("br");
-    output.appendChild(break1);
-
     let inpRecepient = document.createElement("input");
     inpRecepient.type = "text";
     inpRecepient.name = "recepient";
@@ -281,21 +279,16 @@ function createBundle() {
     inpRecepient.value = "Recepient of bundle"
     output.appendChild(inpRecepient)
 
-    let break2 = document.createElement("br");
-    output.appendChild(break2);
-
     let inpMessage = document.createElement("input");
     inpMessage.type = "text";
     inpMessage.name = "message"
     inpMessage.value = "Message to the recepient (Optional)"
     output.appendChild(inpMessage);
 
-    let break3 = document.createElement("br");
-    output.appendChild(break3);
 
     let buttonFinish = document.createElement("input");
     buttonFinish.type = "Submit";
-    buttonFinish.value = "Create bundle"
+    buttonFinish.value = "CREATE BUNDLE"
     output.appendChild(buttonFinish)
 
     container.appendChild(output);
@@ -444,6 +437,8 @@ function gameResults(evt) {
 //***************************************************
 
 function drawBundles() {
+    let main = document.querySelector("main");
+    main.style.display = "flex";
     let container = document.querySelectorAll("article")[1];
     container.innerHTML = "";
     let figure = document.querySelector("figure");

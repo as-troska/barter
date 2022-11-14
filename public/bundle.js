@@ -64,6 +64,8 @@ async function drawSite() {
             message.innerHTML = res.message;
             header.appendChild(message);
 
+            document.title = res.title;
+
         })
 }
 
@@ -101,7 +103,7 @@ function drawGame(index) {
 
     if (game.info.metacritic != null) {
         let metacritic = lag("span");
-        metacritic.innerHTML = "<a href=" + game.metacriticURL + "><b>Metacritic:</b> " + game.info.metacritic;
+        metacritic.innerHTML = "<a href=" + game.metacriticURL + " target='_blank'><b>Metacritic:</b> " + game.info.metacritic;
         article.appendChild(metacritic);
     }
 
