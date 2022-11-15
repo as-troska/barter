@@ -7,10 +7,21 @@ const {cookieKey} = require("./config.js");
 const {adminPassword} = require("./config.js");
 const session = require("express-session");
 const helmet = require("helmet");
+const http = require("http");
+const https = require("https");
+const fs = require("fs");
 
 
 
 const app = express();
+
+const credentials = {
+    key: fs.readFileSync("privatekey.key"),
+    cert: fs.readFileSync("certificate.crt")
+}
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -32,9 +43,13 @@ function securityCheck(req, res, next) {
     }
 }
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
     console.log("Server up at http://localhost.com:" + port)
     db.checkConnection()
+})
+
+httpsServer.listen(5953, () => {
+    console.log("https up at https://localhost:5953")
 })
 
 app.get("/", securityCheck, (req, res) => {
