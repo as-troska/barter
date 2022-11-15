@@ -11,12 +11,12 @@ The app is mainly built as a learning project, where I set out to get better wit
 
 Installation
 ------------
-You need a .env file with the following fields:
-MONGOURI= "Your mongo connection string"
-PORT= Port number for the app
-RAWGKEY= "Your rawg.io api key"
-COOKIEKEY= "Just some random numbers for generating your cookies" (I'm not even sure I use this anymore ;)
-ADMINPASSWORD=" "A password for getting a session"
+You need a .env file with the following fields:\
+MONGOURI= "Your mongo connection string"\
+PORT= Port number for the app\
+RAWGKEY= "Your rawg.io api key"\
+COOKIEKEY= "Just some random numbers for generating your cookies" (I'm not even sure I use this anymore ;)\
+ADMINPASSWORD=" "A password for getting a session"\
 
 Dockerfile is included
 
